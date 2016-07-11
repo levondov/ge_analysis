@@ -53,11 +53,20 @@ def plot_data():
 		# import and format data
 		fname = 'item_' + str(item) + '.txt'
 		data = np.genfromtxt(fname,dtype='float',delimiter=',')
+		
+		# find index for points up to last 24 hours
 		data_t = data[:,5]
-		data_b = data[:,1]
-		data_bq = data[:,2]
-		data_s = data[:,3]
-		data_sq = data[:,4]
+		last_24 = time.time() - 3600*24
+		index = 0
+		for i,times in enumerate(data_t):
+			if times >= last_24:
+				index = i
+				break
+		data_t = data[index:,5]		
+		data_b = data[index:,1]
+		data_bq = data[index:,2]
+		data_s = data[index:,3]
+		data_sq = data[index:,4]
 		
 		# grab name of item for graph title
 		item_title = 'Item ID not found in database'
