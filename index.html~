@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Levon&#39;s Website</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>      
+    <script type="text/javascript">
+    $(document).ready(function() {
+        function loadData() {
+        $.ajax({
+             url : "http://52.53.209.19/ge_analysis/html_graph.txt",
+            dataType: "text",
+            success : function (data) {
+               $("#test").html(data);
+            }
+        });
+        }
+        
+        setInterval(function() {
+            loadData()
+        }, 5000);
+    }); 
+    </script>
+  </head>
+  <body>
+        <h1>Grand Exchange analysis</h1>
+	<h3> </h3>
+      <div id='test'>
+        Loading... <br> 
+      </div>
+
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
