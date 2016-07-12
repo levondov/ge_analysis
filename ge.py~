@@ -75,7 +75,7 @@ def plot_data():
 				item_title = all_item['name']
 				
 		# format time
-		s = data_t/1000.0
+		s = (data_t - 3600*8)
 		dts = map(datetime.datetime.fromtimestamp, s)
 		fds = dates.date2num(dts)
 		hfnt = dates.DateFormatter('%m/%d %H:%M:%S')
