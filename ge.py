@@ -9,11 +9,11 @@ from matplotlib import dates
 import time
 import datetime
 
-# shark, barrow tab, 
-ITEMS = [20229,383,385,19629]
-
 all_items = open('items.json')
 all_items = json.load(all_items)
+
+def item_list():
+	return np.genfromtxt('ITEMS.txt',delimiter=',',dtype='int')
 
 def ge_price(item_id):
     api_url = 'https://api.rsbuddy.com/grandExchange?a=guidePrice&i=' + str(item_id)
@@ -73,6 +73,9 @@ def plot_data():
 		for all_item in all_items:
 			if all_item['id'] == item:
 				item_title = all_item['name']
+				break
+			else:
+				item_title = "ID: " + str(item) + " name not found in database"
 				
 		# format time
 		s = (data_t - 3600*8)
@@ -99,15 +102,17 @@ def plot_data():
 		f.autofmt_xdate()
 		plt.savefig('item_' + str(item) + '.png')
 		plt.close('all')
-    
-# make html file to display graphs in webpage
-f = open('html_graph.txt','w')
-for item in ITEMS:
-	temp = "<img src=\"item_" + str(item) + ".png\">" + "<br>"
-	f.write(temp)
-f.close()
 
 while True:
+	# check txt file for new items and generate html file to display graphs in webpage
+	f = open('html_graph.txt','w')
+	ITEMS = item_list()
+	for item in ITEMS:
+		temp = "<img src=\"item_" + str(item) + ".png\">" + "<br>"
+		f.write(temp)
+	f.close()
+
+	# grab item data and generate plots
 	print 'updating graphs....'
 	try:
 		grab_data()
